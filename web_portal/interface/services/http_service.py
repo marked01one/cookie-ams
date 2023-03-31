@@ -17,6 +17,10 @@ class TransformerService:
   '''
   Utility class encapsulating HTTP calls for manufacturer data
   '''
-  def get_transformers(self, params_dict: dict) -> dict:
-    response = requests.get(f'{BASE_URL}/transformers', params=params_dict)
+  def get_transformers(self, params_dict: dict = None) -> dict:
+    if params_dict is None:
+      response = requests.get(f'{BASE_URL}/transformer/')
+    else:
+      response = requests.get(f'{BASE_URL}/transformer/', params=params_dict)
+    
     return error_handler_clean(response)
