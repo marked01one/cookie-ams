@@ -5,7 +5,6 @@ def error_handler_clean(response: Response) -> dict:
       "response_code": response.status_code,
       "content": response.json(),
     }
-    
   match str(response.status_code)[0]:
     case '2':
       body['status'] = 'success!'
