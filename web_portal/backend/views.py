@@ -1,12 +1,11 @@
 from datetime import datetime
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework import viewsets, status
-
-from .pagination import ResultsSetPagination
+from rest_framework import viewsets, status, mixins
+from django.db.models.manager import BaseManager
+from django.db.models import Model
+from django.http import HttpRequest
 
 from .serializers import ManufacturerSerializer, RegionSerializer, TransformerSerializer
-
 from .models import Manufacturer, Region, Transformer
 
 # Create your views here.
@@ -58,7 +57,7 @@ class RegionViewSet(viewsets.ViewSet):
       return Response(body, status=status.HTTP_201_CREATED)
     
 
-class TransformerViewSet(viewsets.ViewSet):
+class TransformerViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
   '''
   A simple ViewSet for operating on transformer data
   
@@ -72,22 +71,44 @@ class TransformerViewSet(viewsets.ViewSet):
   '''
   queryset = Transformer.objects.all()
   serializer_class = TransformerSerializer
-  pagination_class = ResultsSetPagination
+  serializer = serializer_class(queryset, many=True)
   
-  def list(self, request):
+  def list(self, request, *args, **kwargs):
+    # Define query params object
     params = {
-      "manufacturer_id": request.query_params.get('manufacturer'),
-      "region_id": request.query_params.get('region'),
-      "kva": float(request.query_params.get('kva'))
-              if (request.query_params.get('kva') != None)
-              else None
+      "manufacturer_id": request.GET.get('manufacturer_id'),
+      "region_id": request.GET.get('region_id'),
+      "kva": float(request.GET.get('kva')) if (request.GET.get('kva') != None) else None,
+      "page": request.GET.get('page'),
+      "page_size": request.GET.get('page_size')
     }
-    queryset = Transformer.objects.filter(**params)
+    queryset = self.filter_queryset(
+      self._helper_querystring_filter(Transformer.objects.all().order_by('id'), params)
+    )
     serializer = TransformerSerializer(queryset, many=True)
-    return Response(serializer.data)
+
+
+    try: 
+      paginated_queryset = self.paginate_queryset(queryset)
+    except Exception:
+      return Response({
+        "status": status.HTTP_404_NOT_FOUND,
+        "message": "Not Found error. There is no page '" + params['page'] + "' to be found.",
+        "results" : []
+      })
+
+    if params['page'] != None or params['page_size'] != None:
+      paginated_serializer = self.get_serializer(paginated_queryset, many=True)
+      return self.get_paginated_response(paginated_serializer.data)
+
+    return Response({
+      "count": len(serializer.data),
+      "message": 'All transformer records.',
+      "results" : serializer.data
+    })
   
   
-  def create(self, request):
+  def create(self, request: HttpRequest) -> Response:
     '''
     ## Request body
     ```json
@@ -123,3 +144,11 @@ class TransformerViewSet(viewsets.ViewSet):
       }
     )
   
+  
+  def _helper_querystring_filter(self, queryset: BaseManager[Model], params_map: dict) -> BaseManager[Model]:
+    for key in params_map.keys():
+      if params_map[key] != None and key not in ['page', 'page_size']:
+        param = {key: params_map[key]}
+        queryset = queryset.filter(**param)
+    
+    return queryset
