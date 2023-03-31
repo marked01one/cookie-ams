@@ -17,6 +17,7 @@ The entire technology stack is built upon Python and its various libraries.
 Python was chosen due to its simple syntax and ubiquity in the IT automation and data analytics space. It will allow developers from multiple fields to easily collaborate without having to learn a new programming language.
 
 ### Libraries & Frameworks:
+<span>
 <a>
   <img src="https://img.shields.io/badge/-pandas-purple?style=for-the-badge&logo=pandas"/>
 </a>
@@ -38,3 +39,4 @@ Python was chosen due to its simple syntax and ubiquity in the IT automation and
 <a>
   <img src="https://img.shields.io/badge/-Scikit_learn-orange?style=for-the-badge&logo=scikit-learn&logoColor=white" />
 </a>
+</span>
