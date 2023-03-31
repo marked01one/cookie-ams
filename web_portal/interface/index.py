@@ -11,7 +11,6 @@ app.layout = html.Div(className="container", children=[
   html.Ul(id='output-container')
 ])
 
-
 @callback(Output('output-container', 'children'), Input("button", "n_clicks"))
 def update_output_div(n_clicks):
   
