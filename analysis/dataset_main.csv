@@ -1,101 +1,101 @@
-Transformer Serial No.,Mfg Code,Manufacturer,KvA Code,KvA,Age,Reg Code,Region,Failure Date,Cause Code,Failure Cause
-T1012273,2,Siemens,3,45,1,2,Coastal,1/17/2022,3,Animal
-T1083095,2,Siemens,4,75,1,4,Mountain,8/14/2022,4,Fire
-T1010763,4,ABB,1,15,1,4,Mountain,10/13/2022,1,Overload
-T1070899,3,Schneider,4,75,2,1,North,9/5/2022,4,Fire
-T1097583,1,General Electric,3,45,2,2,Coastal,3/20/2022,5,Corrosion
-T1060963,3,Schneider,3,45,2,4,Mountain,5/5/2022,4,Fire
-T1015855,4,ABB,2,30,3,1,North,8/2/2022,2,Car Hit Pole
-T1065758,3,Schneider,1,15,3,1,North,11/3/2022,5,Corrosion
-T1079245,2,Siemens,3,45,3,3,Desert,11/20/2022,5,Corrosion
-T1072194,4,ABB,5,112.5,3,3,Desert,8/7/2022,3,Animal
-T1077525,4,ABB,3,45,3,3,Desert,2/28/2022,4,Fire
-T1072680,2,Siemens,4,75,3,4,Mountain,12/24/2022,4,Fire
-T1012423,2,Siemens,5,112.5,4,2,Coastal,2/18/2022,4,Fire
-T1073957,1,General Electric,4,75,4,4,Mountain,9/27/2022,3,Animal
-T1039788,4,ABB,2,30,4,4,Mountain,8/10/2022,4,Fire
-T1066808,4,ABB,4,75,5,1,North,10/11/2022,3,Animal
-T1060123,2,Siemens,5,112.5,5,1,North,9/14/2022,1,Overload
-T1066405,1,General Electric,1,15,5,1,North,10/13/2022,2,Car Hit Pole
-T1047676,2,Siemens,1,15,5,1,North,5/18/2022,5,Corrosion
-T1017983,4,ABB,5,112.5,5,4,Mountain,7/12/2022,4,Fire
-T1062981,3,Schneider,2,30,5,4,Mountain,3/2/2022,4,Fire
-T1011626,2,Siemens,4,75,6,2,Coastal,8/27/2022,3,Animal
-T1025881,4,ABB,4,75,7,3,Desert,2/14/2022,3,Animal
-T1021798,3,Schneider,2,30,7,4,Mountain,3/26/2022,3,Animal
-T1069173,4,ABB,5,112.5,7,4,Mountain,1/11/2022,3,Animal
-T1047794,2,Siemens,4,75,8,1,North,1/22/2022,4,Fire
-T1074411,2,Siemens,4,75,8,3,Desert,5/25/2022,4,Fire
-T1043969,2,Siemens,4,75,8,4,Mountain,8/16/2022,3,Animal
-T1090658,3,Schneider,2,30,8,4,Mountain,12/27/2022,4,Fire
-T1077424,1,General Electric,4,75,8,4,Mountain,8/27/2022,1,Overload
-T1097004,2,Siemens,2,30,9,4,Mountain,9/25/2022,5,Corrosion
-T1084068,3,Schneider,5,112.5,10,1,North,9/23/2022,2,Car Hit Pole
-T1036630,1,General Electric,3,45,10,2,Coastal,11/25/2022,5,Corrosion
-T1092306,4,ABB,1,15,10,2,Coastal,8/11/2022,1,Overload
-T1001383,3,Schneider,5,112.5,10,3,Desert,11/28/2022,1,Overload
-T1009272,1,General Electric,2,30,11,1,North,11/20/2022,3,Animal
-T1046478,3,Schneider,2,30,11,2,Coastal,3/3/2022,2,Car Hit Pole
-T1057353,2,Siemens,5,112.5,11,2,Coastal,7/21/2022,1,Overload
-T1082005,3,Schneider,5,112.5,11,3,Desert,6/28/2022,2,Car Hit Pole
-T1037208,2,Siemens,4,75,12,1,North,7/21/2022,1,Overload
-T1093175,4,ABB,1,15,12,4,Mountain,7/17/2022,3,Animal
-T1030115,4,ABB,1,15,13,1,North,4/28/2022,2,Car Hit Pole
-T1054207,1,General Electric,2,30,13,1,North,1/8/2022,2,Car Hit Pole
-T1031169,3,Schneider,4,75,13,2,Coastal,10/25/2022,5,Corrosion
-T1041264,4,ABB,5,112.5,13,3,Desert,7/4/2022,3,Animal
-T1081260,3,Schneider,4,75,13,4,Mountain,4/21/2022,5,Corrosion
-T1087777,3,Schneider,4,75,14,1,North,5/14/2022,1,Overload
-T1059977,4,ABB,1,15,14,2,Coastal,12/2/2022,5,Corrosion
-T1037284,4,ABB,2,30,14,3,Desert,1/23/2022,1,Overload
-T1033916,1,General Electric,4,75,14,4,Mountain,10/24/2022,4,Fire
-T1070668,4,ABB,4,75,15,1,North,3/8/2022,1,Overload
-T1079476,1,General Electric,4,75,15,2,Coastal,3/8/2022,5,Corrosion
-T1011486,3,Schneider,4,75,15,2,Coastal,4/3/2022,1,Overload
-T1007907,2,Siemens,2,30,15,3,Desert,12/2/2022,3,Animal
-T1050965,4,ABB,5,112.5,16,1,North,7/27/2022,3,Animal
-T1008656,4,ABB,5,112.5,16,1,North,9/10/2022,2,Car Hit Pole
-T1043001,1,General Electric,3,45,16,4,Mountain,10/4/2022,2,Car Hit Pole
-T1031072,4,ABB,5,112.5,17,2,Coastal,1/27/2022,3,Animal
-T1018619,2,Siemens,1,15,17,2,Coastal,10/3/2022,5,Corrosion
-T1067230,4,ABB,1,15,17,2,Coastal,6/22/2022,4,Fire
-T1092431,2,Siemens,3,45,17,2,Coastal,9/22/2022,1,Overload
-T1059629,1,General Electric,3,45,17,3,Desert,11/27/2022,5,Corrosion
-T1093745,4,ABB,3,45,18,1,North,12/11/2022,1,Overload
-T1020802,3,Schneider,3,45,18,2,Coastal,2/12/2022,1,Overload
-T1007040,3,Schneider,2,30,18,3,Desert,9/11/2022,4,Fire
-T1059638,4,ABB,4,75,18,4,Mountain,2/11/2022,5,Corrosion
-T1034113,4,ABB,4,75,18,4,Mountain,10/8/2022,4,Fire
-T1003695,2,Siemens,4,75,19,1,North,1/26/2022,2,Car Hit Pole
-T1011404,1,General Electric,3,45,19,2,Coastal,12/21/2022,2,Car Hit Pole
-T1071362,2,Siemens,5,112.5,19,3,Desert,6/27/2022,1,Overload
-T1028903,3,Schneider,4,75,20,1,North,12/2/2022,1,Overload
-T1094359,1,General Electric,5,112.5,20,2,Coastal,11/1/2022,2,Car Hit Pole
-T1036112,2,Siemens,3,45,20,2,Coastal,9/27/2022,5,Corrosion
-T1066683,2,Siemens,4,75,20,3,Desert,10/16/2022,2,Car Hit Pole
-T1063835,3,Schneider,1,15,20,4,Mountain,8/9/2022,3,Animal
-T1076046,2,Siemens,5,112.5,21,1,North,3/18/2022,2,Car Hit Pole
-T1044747,4,ABB,5,112.5,21,1,North,6/13/2022,2,Car Hit Pole
-T1070569,2,Siemens,3,45,21,2,Coastal,7/22/2022,3,Animal
-T1061232,4,ABB,1,15,21,2,Coastal,8/14/2022,4,Fire
-T1053776,4,ABB,5,112.5,21,2,Coastal,10/11/2022,1,Overload
-T1011767,4,ABB,1,15,21,3,Desert,9/15/2022,3,Animal
-T1066300,2,Siemens,1,15,22,2,Coastal,2/2/2022,1,Overload
-T1033131,2,Siemens,1,15,22,4,Mountain,1/9/2022,3,Animal
-T1022983,3,Schneider,4,75,23,1,North,4/8/2022,1,Overload
-T1084947,3,Schneider,5,112.5,23,1,North,9/5/2022,1,Overload
-T1036160,2,Siemens,5,112.5,23,2,Coastal,3/15/2022,1,Overload
-T1013429,1,General Electric,5,112.5,23,3,Desert,12/10/2022,2,Car Hit Pole
-T1057070,1,General Electric,4,75,23,3,Desert,9/4/2022,3,Animal
-T1000093,2,Siemens,5,112.5,23,3,Desert,6/4/2022,1,Overload
-T1003603,1,General Electric,3,45,23,4,Mountain,7/19/2022,2,Car Hit Pole
-T1086354,4,ABB,5,112.5,23,4,Mountain,6/28/2022,2,Car Hit Pole
-T1024934,3,Schneider,5,112.5,24,1,North,3/25/2022,2,Car Hit Pole
-T1016809,4,ABB,4,75,24,2,Coastal,10/25/2022,2,Car Hit Pole
-T1009035,4,ABB,3,45,24,3,Desert,5/16/2022,3,Animal
-T1096401,3,Schneider,1,15,24,3,Desert,5/24/2022,5,Corrosion
-T1021969,3,Schneider,5,112.5,24,4,Mountain,10/20/2022,5,Corrosion
-T1028536,1,General Electric,2,30,25,1,North,3/21/2022,1,Overload
-T1092555,3,Schneider,1,15,25,2,Coastal,3/4/2022,2,Car Hit Pole
-T1014638,4,ABB,1,15,25,3,Desert,6/21/2022,4,Fire
-T1018481,1,General Electric,4,75,25,3,Desert,1/1/2022,1,Overload
+serial_number,manufacturer,kva,age,region,failure_date,failure_cause
+T1012273,Siemens,45,1,Coastal,1/17/2022,Animal
+T1083095,Siemens,75,1,Mountain,8/14/2022,Fire
+T1010763,ABB,15,1,Mountain,10/13/2022,Overload
+T1070899,Schneider,75,2,North,9/5/2022,Fire
+T1097583,General Electric,45,2,Coastal,3/20/2022,Corrosion
+T1060963,Schneider,45,2,Mountain,5/5/2022,Fire
+T1015855,ABB,30,3,North,8/2/2022,Car Hit Pole
+T1065758,Schneider,15,3,North,11/3/2022,Corrosion
+T1079245,Siemens,45,3,Desert,11/20/2022,Corrosion
+T1072194,ABB,112.5,3,Desert,8/7/2022,Animal
+T1077525,ABB,45,3,Desert,2/28/2022,Fire
+T1072680,Siemens,75,3,Mountain,12/24/2022,Fire
+T1012423,Siemens,112.5,4,Coastal,2/18/2022,Fire
+T1073957,General Electric,75,4,Mountain,9/27/2022,Animal
+T1039788,ABB,30,4,Mountain,8/10/2022,Fire
+T1066808,ABB,75,5,North,10/11/2022,Animal
+T1060123,Siemens,112.5,5,North,9/14/2022,Overload
+T1066405,General Electric,15,5,North,10/13/2022,Car Hit Pole
+T1047676,Siemens,15,5,North,5/18/2022,Corrosion
+T1017983,ABB,112.5,5,Mountain,7/12/2022,Fire
+T1062981,Schneider,30,5,Mountain,3/2/2022,Fire
+T1011626,Siemens,75,6,Coastal,8/27/2022,Animal
+T1025881,ABB,75,7,Desert,2/14/2022,Animal
+T1021798,Schneider,30,7,Mountain,3/26/2022,Animal
+T1069173,ABB,112.5,7,Mountain,1/11/2022,Animal
+T1047794,Siemens,75,8,North,1/22/2022,Fire
+T1074411,Siemens,75,8,Desert,5/25/2022,Fire
+T1043969,Siemens,75,8,Mountain,8/16/2022,Animal
+T1090658,Schneider,30,8,Mountain,12/27/2022,Fire
+T1077424,General Electric,75,8,Mountain,8/27/2022,Overload
+T1097004,Siemens,30,9,Mountain,9/25/2022,Corrosion
+T1084068,Schneider,112.5,10,North,9/23/2022,Car Hit Pole
+T1036630,General Electric,45,10,Coastal,11/25/2022,Corrosion
+T1092306,ABB,15,10,Coastal,8/11/2022,Overload
+T1001383,Schneider,112.5,10,Desert,11/28/2022,Overload
+T1009272,General Electric,30,11,North,11/20/2022,Animal
+T1046478,Schneider,30,11,Coastal,3/3/2022,Car Hit Pole
+T1057353,Siemens,112.5,11,Coastal,7/21/2022,Overload
+T1082005,Schneider,112.5,11,Desert,6/28/2022,Car Hit Pole
+T1037208,Siemens,75,12,North,7/21/2022,Overload
+T1093175,ABB,15,12,Mountain,7/17/2022,Animal
+T1030115,ABB,15,13,North,4/28/2022,Car Hit Pole
+T1054207,General Electric,30,13,North,1/8/2022,Car Hit Pole
+T1031169,Schneider,75,13,Coastal,10/25/2022,Corrosion
+T1041264,ABB,112.5,13,Desert,7/4/2022,Animal
+T1081260,Schneider,75,13,Mountain,4/21/2022,Corrosion
+T1087777,Schneider,75,14,North,5/14/2022,Overload
+T1059977,ABB,15,14,Coastal,12/2/2022,Corrosion
+T1037284,ABB,30,14,Desert,1/23/2022,Overload
+T1033916,General Electric,75,14,Mountain,10/24/2022,Fire
+T1070668,ABB,75,15,North,3/8/2022,Overload
+T1079476,General Electric,75,15,Coastal,3/8/2022,Corrosion
+T1011486,Schneider,75,15,Coastal,4/3/2022,Overload
+T1007907,Siemens,30,15,Desert,12/2/2022,Animal
+T1050965,ABB,112.5,16,North,7/27/2022,Animal
+T1008656,ABB,112.5,16,North,9/10/2022,Car Hit Pole
+T1043001,General Electric,45,16,Mountain,10/4/2022,Car Hit Pole
+T1031072,ABB,112.5,17,Coastal,1/27/2022,Animal
+T1018619,Siemens,15,17,Coastal,10/3/2022,Corrosion
+T1067230,ABB,15,17,Coastal,6/22/2022,Fire
+T1092431,Siemens,45,17,Coastal,9/22/2022,Overload
+T1059629,General Electric,45,17,Desert,11/27/2022,Corrosion
+T1093745,ABB,45,18,North,12/11/2022,Overload
+T1020802,Schneider,45,18,Coastal,2/12/2022,Overload
+T1007040,Schneider,30,18,Desert,9/11/2022,Fire
+T1059638,ABB,75,18,Mountain,2/11/2022,Corrosion
+T1034113,ABB,75,18,Mountain,10/8/2022,Fire
+T1003695,Siemens,75,19,North,1/26/2022,Car Hit Pole
+T1011404,General Electric,45,19,Coastal,12/21/2022,Car Hit Pole
+T1071362,Siemens,112.5,19,Desert,6/27/2022,Overload
+T1028903,Schneider,75,20,North,12/2/2022,Overload
+T1094359,General Electric,112.5,20,Coastal,11/1/2022,Car Hit Pole
+T1036112,Siemens,45,20,Coastal,9/27/2022,Corrosion
+T1066683,Siemens,75,20,Desert,10/16/2022,Car Hit Pole
+T1063835,Schneider,15,20,Mountain,8/9/2022,Animal
+T1076046,Siemens,112.5,21,North,3/18/2022,Car Hit Pole
+T1044747,ABB,112.5,21,North,6/13/2022,Car Hit Pole
+T1070569,Siemens,45,21,Coastal,7/22/2022,Animal
+T1061232,ABB,15,21,Coastal,8/14/2022,Fire
+T1053776,ABB,112.5,21,Coastal,10/11/2022,Overload
+T1011767,ABB,15,21,Desert,9/15/2022,Animal
+T1066300,Siemens,15,22,Coastal,2/2/2022,Overload
+T1033131,Siemens,15,22,Mountain,1/9/2022,Animal
+T1022983,Schneider,75,23,North,4/8/2022,Overload
+T1084947,Schneider,112.5,23,North,9/5/2022,Overload
+T1036160,Siemens,112.5,23,Coastal,3/15/2022,Overload
+T1013429,General Electric,112.5,23,Desert,12/10/2022,Car Hit Pole
+T1057070,General Electric,75,23,Desert,9/4/2022,Animal
+T1000093,Siemens,112.5,23,Desert,6/4/2022,Overload
+T1003603,General Electric,45,23,Mountain,7/19/2022,Car Hit Pole
+T1086354,ABB,112.5,23,Mountain,6/28/2022,Car Hit Pole
+T1024934,Schneider,112.5,24,North,3/25/2022,Car Hit Pole
+T1016809,ABB,75,24,Coastal,10/25/2022,Car Hit Pole
+T1009035,ABB,45,24,Desert,5/16/2022,Animal
+T1096401,Schneider,15,24,Desert,5/24/2022,Corrosion
+T1021969,Schneider,112.5,24,Mountain,10/20/2022,Corrosion
+T1028536,General Electric,30,25,North,3/21/2022,Overload
+T1092555,Schneider,15,25,Coastal,3/4/2022,Car Hit Pole
+T1014638,ABB,15,25,Desert,6/21/2022,Fire
+T1018481,General Electric,75,25,Desert,1/1/2022,Overload

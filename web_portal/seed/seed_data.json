@@ -1,0 +1,38 @@
+{
+  "region": [
+    {
+      "id": 1,
+      "region_name": "North"
+    },
+    {
+      "id": 2,
+      "region_name": "Coastal"
+    },
+    {
+      "id": 3,
+      "region_name": "Desert"
+    },
+    {
+      "id": 4,
+      "region_name": "Mountain"
+    }
+  ],
+  "manufacturer": [
+    {
+      "id": 1,
+      "manufacturer_name": "General Electric"
+    },
+    {
+      "id": 2,
+      "manufacturer_name": "Siemens"
+    },
+    {
+      "id": 3,
+      "manufacturer_name": "Schneider"
+    },
+    {
+      "id": 4,
+      "manufacturer_name": "ABB"
+    }
+  ]
+}
