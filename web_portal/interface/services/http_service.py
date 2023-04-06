@@ -8,16 +8,28 @@ class ManufacturerService:
   '''
   Utility class encapsulating HTTP calls for manufacturer data
   '''
-  def get_manufacturers(self) -> dict:
+  @staticmethod
+  def get_manufacturers() -> dict:
     response = requests.get(f'{BASE_URL}/manufacturer/')
     return error_handler_clean(response)  
 
+
+class RegionService:
+  '''
+  Utility class encapsulating HTTP calls for region data
+  '''
+  @staticmethod
+  def get_regions() -> dict:
+    response = requests.get(f'{BASE_URL}/region/')
+    return error_handler_clean(response)
+  
 
 class TransformerService:
   '''
   Utility class encapsulating HTTP calls for manufacturer data
   '''
-  def get_transformers(self, params_dict: dict = None) -> dict:
+  @staticmethod
+  def get_transformers(params_dict: dict = None) -> dict:
     if params_dict is None:
       response = requests.get(f'{BASE_URL}/transformer/')
     else:
