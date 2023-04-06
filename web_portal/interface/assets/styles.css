@@ -1,0 +1,48 @@
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #888; 
+}
+
+.sidebar-anchors {
+  font-size: 18;
+  font-weight: 600;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.active {
+  color: #0b5ff1;
+}
+
+.inactive {
+  color: black;
+  font-weight: 500;
+}
+
+.sidebar-height {
+  min-height: 100vh;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
