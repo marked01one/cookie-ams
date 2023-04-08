@@ -1,68 +1,70 @@
 import dash
-from dash import html, dcc, callback, Input, Output, clientside_callback
+from dash import html, dcc, callback, Input, Output
+import dash_bootstrap_components as dbc
 import pandas as pd 
 import plotly.express as px
 import plotly.graph_objects as go
 
-from services.http_service import ManufacturerService, TransformerService
+from services.http_service import ManufacturerService, TransformerService, RegionService
 
 dash.register_page(__name__, path='/', name="Dashboard")
 
 
 layout = html.Div(className="mx-5", children=[
-  html.H1("Dashboard", className="mt-5 mb-2", id='on_init'),
-  dcc.Graph(id="output-graph", className='border-top border-bottom border-secondary'),
-  
-  html.Div(className="row mb-2 mt-5", children=[
-    html.Div(className="col-6 d-flex justify-content-start", children=[
-      html.H1("Transformers")
+  html.Div(children=[
+    html.H1("Dashboard", className="mt-5 mb-2", id="dashboard_init"),
+    dcc.Graph(id="output-graph", className='border-top border-bottom border-secondary'),
+  ]),
+  html.Div(id='table_init', children=[
+    html.Div(className="mb-2 mt-5", children=[
+      html.Div(children=[
+        html.H1("Transformers")
+      ]),
+      
+      html.Div(className="row", children=[
+        html.Div(className='col-2 my-2 border-primary', children=[
+          dcc.Dropdown(
+            options=[
+              m['manufacturer_name'] for m in ManufacturerService.get_manufacturers()['content']
+            ],
+            placeholder='Select a manufacturer...'
+          ),  
+        ]),
+        html.Div(className='col-2 my-2 border-primary', children=[
+          dcc.Dropdown(
+            options=[
+              r['region_name'] for r in RegionService.get_regions()['content']
+            ],
+            placeholder='Select a region...',
+          )
+        ])
+      ])
     ]),
     
-    html.Div(className="col-6 d-flex justify-content-end", children=[
-      html.Select(
-        className="btn btm-sm btn-outline-secondary my-2", 
-        id="sort_manufacturers"),
-      html.Button(className="btn btm-sm btn-outline-secondary dropdown-toggle my-2", children="Data since")
+    html.Div(style={'overflow': 'auto'}, className="table-responsive", children=[
+      dbc.Table(
+        id="transformer_table",
+        className='table table-striped table-sm',
+        bordered=True
+      )
     ])
   ]),
-  html.Div(style={'overflow': 'auto'}, className="table-responsive", children=[
-    html.Table(className='table table-striped table-sm', children=[
-      html.Thead(id='table_columns', className="border-bottom border-dark", style={'fontSize': 16}),
-      html.Tbody(id='table_data', style={'fontSize': 16})
-    ])
-  ])
   
+  html.Nav([
+    html.Ul()
+  ])
 ])
 
 
 @callback([
-  Output('table_columns', 'children'), Output('table_data', 'children'),
   Output('output-graph', 'figure'),
-  Output('sort_manufacturers', 'children')
-], Input("on_init", "n_clicks"))
-def update_output_div(n_clicks):
+], [
+  Input("dashboard_init", "id")
+])
+def update_output_div(id):
   response_body = TransformerService.get_transformers({})['content']['results']
-  
-  # Get the list of columns from the response body
-  columns = list(response_body[0].keys())
-  
-  #Create the table head columns
-  table_columns = html.Tr(
-    [
-      html.Th(col.replace('_', ' ').upper(), scope="col", style={'paddingRight': 72}) 
-      for col in columns[1:]
-    ]
-  )
-  
-  # Create the table body, i.e. the data
-  table_data = [
-    html.Tr([
-      html.Td(children=obj[key], style={'paddingRight': 72}) for key in columns[1:]
-    ]) 
-    for obj in response_body
-  ]
-  
-  # Create the year/count columns for 
+
+  # Create the year/count columns for dashboard
   time_count = {}
   time_count['Year'] = list({ int(obj['date_created'].split("-")[0]) for obj in response_body })
   time_count['Count'] = [
@@ -102,10 +104,56 @@ def update_output_div(n_clicks):
       'titlefont': {"size": 20, "family": "Helvetica"}
     }
   )
+
+  return [fig_data]
+
+
+@callback([
+  Output('transformer_table', 'children')
+], [
+  Input('table_init', 'id')
+])
+def table_init(id):
+  manufacturer_response = ManufacturerService.get_manufacturers()['content']
+  region_response = RegionService.get_regions()['content']
   
-  sort_manufacturers = [
-    html.Option(value=m['manufacturer_name'], children=m['manufacturer_name'])
-    for m in ManufacturerService.get_manufacturers()['content']
+  transformer_query = {
+    'page': 1,
+    'page_size': 25
+  }
+  
+  transformer_response = TransformerService.get_transformers(transformer_query)['content']['results']
+
+  # Get the list of columns from the response body
+  columns = list(transformer_response[0].keys())
+  
+  #Create the table head columns
+  table_columns = [
+    html.Thead(html.Tr([
+      html.Th(col.replace('_', ' ').title(), scope="col") 
+      for col in columns[1:]
+    ], className="bg-dark text-white")
+  )]
+  
+  # Create the table body, i.e. the data
+  table_data = [
+    html.Tbody([html.Tr([
+      html.Td(children=obj[key]) for key in columns[1:]
+    ]) 
+    for obj in transformer_response
+  ])]
+  
+  filter_manufacturers = [
+    dbc.DropdownMenuItem(m['manufacturer_name'])
+    for m in manufacturer_response
   ]
   
-  return table_columns, table_data, fig_data, sort_manufacturers
+  filter_regions = [
+    dbc.DropdownMenuItem(r['region_name'])
+    for r in region_response
+  ]
+  
+  manufacturer_filter = [m['manufacturer_name'] for m in manufacturer_response]
+  
+  return [(table_columns + table_data)]
+

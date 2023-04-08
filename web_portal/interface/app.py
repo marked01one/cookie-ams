@@ -16,7 +16,7 @@ app.layout = html.Div([
   dcc.Location(id="url"),
   html.Nav(className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0", children=[
     html.Div(className="navbar-brand col-sm-3 col-md-2 my-2", children=[
-      html.A("ITC Asset Management", className="navbar-brand mx-3 my-4")
+      html.A("CookieAMS", className="navbar-brand mx-3 my-4")
     ]),
   ]),
   html.Div(className="container-fluid", children=[
@@ -57,4 +57,4 @@ def highlight_current_page(pathname, link_elements) -> Iterable[str]:
 
 
 if __name__ == '__main__':
-  app.run_server()
+  app.run(host='0.0.0.0', port=5000)

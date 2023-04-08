@@ -33,6 +33,10 @@ class TransformerService:
     if params_dict is None:
       response = requests.get(f'{BASE_URL}/transformer/')
     else:
+      for key, value in params_dict.items():
+        if value is None:
+          del params_dict[key]
+        
       response = requests.get(f'{BASE_URL}/transformer/', params=params_dict)
     
     return error_handler_clean(response)
