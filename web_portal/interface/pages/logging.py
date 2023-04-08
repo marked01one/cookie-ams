@@ -2,6 +2,7 @@ from pydoc import classname
 from re import M
 import dash
 from dash import html, dcc, callback, Input, Output, dash_table
+import dash_bootstrap_components as dbc
 import pandas as pd 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -21,8 +22,8 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
       html.Div(className="col-auto", children=[
         html.Label("Serial number:", className="col-form-label", style={'fontSize': 20})
       ]),
-      html.Div(className="col-auto", children=[
-        dcc.Input(type="text", className="form-control")
+      html.Div(className="col-2", children=[
+        dcc.Input(type="text", className="form-control", placeholder='Enter serial number...')
       ]),
       html.Div(className="col-auto form-text", children=[
         'Serial number for a new transformer. ',
@@ -34,11 +35,14 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
       html.Div(className="col-auto", children=[
         html.Label("Manufacturer:", className="col-form-label", style={'fontSize': 20})
       ]),
-      html.Div(className="col-auto", children=[
-        html.Select(className="form-select", id="manufacturer-form")
+      html.Div(className="col-2", children=[
+        dcc.Dropdown(
+          options=[m['manufacturer_name'] for m in ManufacturerService.get_manufacturers()['content']],
+          placeholder='Select a manufacturer...'
+        ),
       ]),
-      html.Div(className="col-auto", children=[
-        html.Span("Manufacturer of the transformer.", className="form-text")
+      html.Div(className="col-auto form-text", children=[
+        html.Span("Manufacturer of the transformer.")
       ]),
     ]),
     
@@ -46,13 +50,57 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
       html.Div(className="col-auto", children=[
         html.Label("Region:", className="col-form-label", style={'fontSize': 20})
       ]),
-      html.Div(className="col-auto", children=[
-        html.Select(className="form-select", id="region-form")
+      html.Div(className="col-2", children=[
+        dcc.Dropdown(
+          options=[m['region_name'] for m in RegionService.get_regions()['content']],
+          placeholder='Select a region...'
+        ),
       ]),
-      html.Div(className="col-auto", children=[
-        html.Span("Region of the transformer.", className="form-text")
+      html.Div(className="col-auto form-text", children=[
+        html.Span("Region of the transformer.")
       ]),
     ]),
+    
+    html.Div(className="row g-3 align-items-center my-3", children=[
+      html.Div(className="col-auto", children=[
+        html.Label("Rated KvA:", className="col-form-label", style={'fontSize': 20})
+      ]),
+      html.Div(className="col-2", children=[
+        dcc.Input(type="text", className="form-control", placeholder='Enter rated KvA...'),
+      ]),
+      html.Div(className="col-auto form-text", children=[
+        html.Span("The rated KvA of the transformer.")
+      ]),
+    ]),
+    html.Div(className="row g-3 align-items-center my-3", children=[
+      dbc.Button("Submit transformer", outline=True, color="primary", className="me-1 col-2")
+    ])
+    
+  ]),
+  
+  html.Hr(),
+  html.H2("New Failure", style={'marginBottom': 0, 'marginTop': 32}),
+  html.Form([
+    html.Div(className="my-3", children=[
+      html.Label("Search transformer by serial:", className="col-form-label", style={'fontSize': 20}),
+      dcc.Input(type="text", className="form-control", placeholder='Search...'),
+    ]),
+    
+    html.Div(className="row g-3 align-items-center my-3", children=[
+      html.Div(className="col-auto", children=[
+        html.Label("Failure Cause:", className="col-form-label", style={'fontSize': 20})
+      ]),
+      html.Div(className="col-2", children=[
+        dcc.Input(type="text", className="form-control", placeholder='Enter failure cause...'),
+      ]),
+      html.Div(className="col-auto form-text", children=[
+        html.Span("The rated KvA of the transformer.")
+      ]),
+    ]),
+    
+    html.Div(className="row g-3 align-items-center my-3", children=[
+      dbc.Button("Submit failure", outline=True, color="primary", className="me-1 col-2")
+    ])
   ]),
 ])
 
