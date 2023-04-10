@@ -20,25 +20,26 @@ layout = html.Div(className="mx-5", children=[
       html.Div(children=[
         html.H1("Transformers")
       ]),
-      
       html.Div(className="row", children=[
-        html.Div(className='col-2 my-2 border-primary', children=[
-          dcc.Dropdown(
-            options=[
+        html.Div(className='col-4 col-md-2 my-2 border-primary', children=[
+          dcc.Dropdown(options=[
               m['manufacturer_name'] for m in ManufacturerService.get_manufacturers()['content']
             ],
+            id="filter_manufacturer_table",
             placeholder='Select a manufacturer...'
           ),  
         ]),
-        html.Div(className='col-2 my-2 border-primary', children=[
-          dcc.Dropdown(
-            options=[
-              r['region_name'] for r in RegionService.get_regions()['content']
-            ],
-            placeholder='Select a region...',
+        html.Div(className='col-4 col-md-2 my-2 border-primary', children=[
+          dcc.Dropdown(options=[
+            r['region_name'] for r in RegionService.get_regions()['content']
+          ],
+          id="filter_region_table",
+          placeholder='Select a region...',
           )
         ])
-      ])
+      ]),
+
+      html.Div(className="form-text", id="table_items_count")
     ]),
     
     html.Div(style={'overflow': 'auto'}, className="table-responsive", children=[
@@ -109,11 +110,12 @@ def update_output_div(id):
 
 
 @callback([
-  Output('transformer_table', 'children')
+  Output('transformer_table', 'children'), Output('table_items_count', 'children')
 ], [
-  Input('table_init', 'id')
+  Input('table_init', 'id'), 
+  Input("filter_manufacturer_table", "value"), Input("filter_region_table", "value")
 ])
-def table_init(id):
+def table_init(id, manufacturer, region):
   manufacturer_response = ManufacturerService.get_manufacturers()['content']
   region_response = RegionService.get_regions()['content']
   
@@ -121,11 +123,28 @@ def table_init(id):
     'page': 1,
     'page_size': 25
   }
+  print(manufacturer)
   
-  transformer_response = TransformerService.get_transformers(transformer_query)['content']['results']
+  # Extract current choice for manufacturer
+  try:
+    transformer_query['manufacturer_id'] = [
+      m['id'] for m in manufacturer_response if m['manufacturer_name'] == manufacturer
+    ][0]
+  except IndexError:
+    pass
+  
+  # Extract current choice for manufacturer
+  try:
+    transformer_query['region_id'] = [
+      r['id'] for r in region_response if r['region_name'] == region
+    ][0]
+  except IndexError:
+    pass
+  
+  transformer_response = TransformerService.get_transformers(transformer_query)['content']
 
   # Get the list of columns from the response body
-  columns = list(transformer_response[0].keys())
+  columns = list(transformer_response['results'][0].keys())
   
   #Create the table head columns
   table_columns = [
@@ -137,23 +156,20 @@ def table_init(id):
   
   # Create the table body, i.e. the data
   table_data = [
-    html.Tbody([html.Tr([
-      html.Td(children=obj[key]) for key in columns[1:]
-    ]) 
-    for obj in transformer_response
-  ])]
-  
-  filter_manufacturers = [
-    dbc.DropdownMenuItem(m['manufacturer_name'])
-    for m in manufacturer_response
+    html.Tbody([html.Tr([html.Td(children=obj[key]) for key in columns[1:]]) 
+    for obj in transformer_response['results']
+    ])
   ]
   
-  filter_regions = [
-    dbc.DropdownMenuItem(r['region_name'])
-    for r in region_response
-  ]
+  # Get length of table
+  if transformer_response['count'] > 0:
+    table_length = [
+      "There are ",
+      html.Strong(str(transformer_response['count'])), 
+      " transformers with these specifications."
+    ]  
+  else:
+    table_length = "There are no transformers with these specifications."
   
-  manufacturer_filter = [m['manufacturer_name'] for m in manufacturer_response]
-  
-  return [(table_columns + table_data)]
+  return [(table_columns + table_data), table_length]
 
