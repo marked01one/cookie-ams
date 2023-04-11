@@ -1,13 +1,8 @@
-from pydoc import classname
-from re import M
 import dash
-from dash import html, dcc, callback, Input, Output, dash_table
+from dash import html, dcc
 import dash_bootstrap_components as dbc
-import pandas as pd 
-import plotly.express as px
-import plotly.graph_objects as go
 
-from services.http_service import ManufacturerService, TransformerService, RegionService
+from services.http_service import ManufacturerService, RegionService
 
 dash.register_page(__name__, path='/logs')
 

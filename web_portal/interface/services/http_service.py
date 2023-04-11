@@ -29,7 +29,7 @@ class TransformerService:
   Utility class encapsulating HTTP calls for manufacturer data
   '''
   @staticmethod
-  def get_transformers(params_dict: dict = None) -> dict:
+  def get_transformers(params_dict: dict | None = None) -> dict:
     if params_dict is None:
       response = requests.get(f'{BASE_URL}/transformer/')
     else:
