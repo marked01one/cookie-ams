@@ -1,3 +1,4 @@
+import random
 import dash
 from dash import html, dcc, callback, Input, Output
 import dash_bootstrap_components as dbc
@@ -6,15 +7,24 @@ import plotly.express as px
 
 from services.http_service import ManufacturerService, TransformerService, RegionService
 
-dash.register_page(__name__, path='/', name="Dashboard")
+dash.register_page(
+  __name__, path='/', name="Dashboard",
+  title="CookieAMS - Main Dashboard"
+)
+
+STATUS_DEMO = [('Healthy', 'text-success') for _ in range(12)] + \
+  [('Degrading', 'text-warning') for _ in range(6)] + \
+  [('Critical', 'text-danger') for _ in range(3)]
 
 
-layout = html.Div(className="mx-5", children=[
+layout = html.Div(className="mx-2", children=[
   # Dashboard
   html.Div(children=[
-    html.H1("Dashboard", className="mt-5 mb-2", id="dashboard_init"),
+    html.H1("Dashboard", style={'marginBottom': 0, 'marginTop': 32}, id="dashboard_init"),
+    html.Hr(style={'marginTop': 6, 'marginBottom': 32}),
     html.Div(className="row", children=[
-      html.Div(className='col-4 col-md-2 my-2 border-primary', children=[
+      html.Div(id="graph-title", className="col-auto fs-3 fst-underline", style={'fontFamily': 'Helvetica'}),
+      html.Div(className='col-4 col-md-2 border-primary', children=[
         dcc.Dropdown(
           options=['Manufacturer', 'Region'],
           id="filter_plot_graph",
@@ -22,16 +32,18 @@ layout = html.Div(className="mx-5", children=[
         ),  
       ])
     ]),
-    dcc.Graph(id="output-graph", className='border border-secondary'),
+    dcc.Graph(id="output-graph"),
     
   ]),
   
-  #
+  # Transformer log tables
   html.Div(id='table_init', children=[
     html.Div(className="mb-2 mt-5", children=[
       html.Div(children=[
-        html.H1("Transformers")
+        html.H1("Transformers", style={'marginBottom': 0, 'marginTop': 32})
       ]),
+      
+      # Filter rows
       html.Div(className="row", children=[
         html.Div(className='col-4 col-md-2 my-2 border-primary', children=[
           dcc.Dropdown(options=[
@@ -48,10 +60,18 @@ layout = html.Div(className="mx-5", children=[
           id="filter_region_table",
           placeholder='Select a region...',
           )
+        ]),
+        html.Div(className="col4 col-md-2 my-2 border-primary", children=[
+          html.Button(
+            "Download Table (.csv)", id="btn_download_table",
+            className="btn btn-outline-primary"
+          ),
+          dcc.Download(id="download_table_csv")
         ])
+        
       ]),
-
       html.Div(className="form-text", id="table_items_count")
+      
     ]),
     
     html.Div(style={'overflow': 'auto'}, className="table-responsive", children=[
@@ -70,13 +90,11 @@ layout = html.Div(className="mx-5", children=[
 
 
 @callback([
-  Output('output-graph', 'figure'),
+  Output('output-graph', 'figure'), Output('graph-title', 'children')
 ], [
-  Input("dashboard_init", "n_clicks"), Input("filter_plot_graph", "value")
+  Input("dashboard_init", "id"), Input("filter_plot_graph", "value")
 ])
-def update_output_div(n_clicks, sort_option: str):
-  transformer_response = TransformerService.get_transformers({})['content']['results']
-  
+def update_output_div(id, sort_option: str):
   query_dict = {}
 
   # Create the year/count columns for dashboard
@@ -120,7 +138,7 @@ def update_output_div(n_clicks, sort_option: str):
       time_count[sort_option] += opt_list
   
   else:
-    option_response = TransformerService.get_transformers({})['content']['results']
+    option_response = TransformerService.get_transformers()['content']['results']
     
     year_list = list({ int(obj['date_created'].split("-")[0]) for obj in option_response })
     count_list = [
@@ -141,16 +159,18 @@ def update_output_div(n_clicks, sort_option: str):
   if sort_option:
     fig_data = px.line(
       df, x="Year", y="Count", template="plotly_white",
-      markers=True, color=sort_option,
-      title="Annual Transformer Distribution by " + sort_option
-    ) 
+      markers=True, color=sort_option
+    )
+    graph_title = f'Annual Transformer Count by {sort_option}' 
   else:
     fig_data = px.line(
       df, x="Year", y="Count", template="plotly_white",
-      title='Annual Transformer Distribution', markers=True
+      markers=True
     )
+    graph_title = f'Annual Transformer Count'
   
   fig_data.update_layout(
+    margin={'l': 8, 'r': 8, 't': 8, 'b': 8},
     title={
       'x': 0.5,
       'y': 0.85,
@@ -173,7 +193,7 @@ def update_output_div(n_clicks, sort_option: str):
       'titlefont': {"size": 20, "family": "Helvetica"}
     }
   )
-  return [fig_data]
+  return [fig_data, graph_title]
 
 
 @callback([
@@ -183,26 +203,27 @@ def update_output_div(n_clicks, sort_option: str):
   Input("filter_manufacturer_table", "value"), Input("filter_region_table", "value")
 ])
 def table_init(id, manufacturer, region):
-  manufacturer_response = ManufacturerService.get_manufacturers()['content']
-  region_response = RegionService.get_regions()['content']
-  
+  '''
+  Callback function for generating the data table
+  '''
   transformer_query = {'page': 1, 'page_size': 25}
   
   # Extract current choice for manufacturer
-  try:
+  if manufacturer:
+    manufacturer_response = ManufacturerService.get_manufacturers()['content']
     transformer_query['manufacturer_id'] = [
       m['id'] for m in manufacturer_response if m['manufacturer_name'] == manufacturer
     ][0]
-  except IndexError:
-    pass
   
   # Extract current choice for manufacturer
-  try:
+  if region:
+    region_response = RegionService.get_regions()['content']
     transformer_query['region_id'] = [
       r['id'] for r in region_response if r['region_name'] == region
     ][0]
-  except IndexError:
-    pass
+    
+  
+  
   
   transformer_response = TransformerService.get_transformers(transformer_query)['content']
 
@@ -214,15 +235,30 @@ def table_init(id, manufacturer, region):
     html.Thead(html.Tr([
       html.Th(col.replace('_', ' ').title(), scope="col") 
       for col in columns[1:]
-    ], className="bg-dark text-white")
+    ] + [html.Th('Health Status', scope='col')]
+    , className="bg-dark text-white")
   )]
   
   # Create the table body, i.e. the data
-  table_data = [
-    html.Tbody([html.Tr([html.Td(children=obj[key]) for key in columns[1:]]) 
-    for obj in transformer_response['results']
-    ])
-  ]
+  data_list = []
+  
+  for obj in transformer_response['results']:
+    status = random.choice(STATUS_DEMO)
+    
+    match status[0]:
+      case 'Healthy':
+        percentage = random.randint(40,99)
+      case 'Degrading':
+        percentage = random.randint(15,39)
+      case 'Critical':
+        percentage = random.randint(1,14)
+    
+    data_list.append(html.Tr(
+      [html.Td(obj[key]) for key in columns[1:]] +
+      [html.Td([html.Strong(status[0]), f" ({percentage}%)"], className=status[1])]
+    ))
+    
+  table_data = [html.Tbody(data_list)]
   
   # Get length of table
   if transformer_response['count'] > 0:
@@ -235,4 +271,24 @@ def table_init(id, manufacturer, region):
     table_length = "There are no transformers with these specifications."
   
   return [(table_columns + table_data), table_length]
+
+
+@callback([
+  Output('download_table_csv', "data")
+], [
+  Input('btn_download_table', 'n_clicks')
+])
+def download_table_as_csv(n_clicks):
+  if n_clicks:
+    transformer_response = TransformerService.get_transformers()['content']['results']
+    
+    columns = list(transformer_response[0].keys())
+    
+    df = pd.DataFrame({
+      col:[tr[col] for tr in transformer_response]
+      for col in columns
+    })
+    
+    return [dcc.send_data_frame(df.to_csv, 'data_table.csv')]
+
 
