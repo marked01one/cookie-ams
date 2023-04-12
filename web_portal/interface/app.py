@@ -15,13 +15,16 @@ app.suppress_callback_exceptions = True
 app.layout = html.Div([
   dcc.Location(id="url"),
   html.Nav(className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0", children=[
-    html.Div(className="navbar-brand col-sm-3 col-md-2 my-2", children=[
-      html.A("CookieAMS", className="navbar-brand mx-3 my-4")
+    html.Div(className="navbar-brand col-md-2 my-2", children=[
+      html.Div(className="navbar-brand mx-4", style={'fontFamily': 'Montserrat', 'fontSize': 14}, children=[
+        html.Strong("CookieAMS", style={'fontSize': 24, 'fontWeight': 'bold'}),
+        html.Span('Your analytics partner for the Internet of Things', className="text-decoration-none fst-italic ms-2")
+      ])
     ]),
   ]),
   html.Div(className="container-fluid", children=[
     html.Div(className="row", children=[
-      html.Nav(className="col-sm-3 col-md-2 d-none d-md-block bg-light sidebar sidebar-height", children=[
+      html.Nav(className="col-md-2 d-none d-md-block bg-light sidebar sidebar-height", children=[
         html.Div(className="sidebar-sticky", children=[
           html.Ul(className="nav flex-column mt-4", children=[
             html.Li(className="nav-item", children=[
@@ -33,7 +36,7 @@ app.layout = html.Div([
           ])
         ])
       ]),
-      html.Div(role="main", className="col-md-9 ms-sm-auto col-lg-10 px-md-4", children=[
+      html.Div(role="main", className="col-12 col-md-10 ms-sm-auto px-md-4", children=[
         dash.page_container
       ])
     ]),

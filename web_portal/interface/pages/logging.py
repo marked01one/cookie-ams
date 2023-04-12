@@ -4,10 +4,13 @@ import dash_bootstrap_components as dbc
 
 from services.http_service import ManufacturerService, RegionService
 
-dash.register_page(__name__, path='/logs')
+dash.register_page(
+  __name__, path='/logs', name="Logging",
+  title="CookieAMS - Logging"
+)
 
 
-layout = html.Div(id="on_init_logs", className="mx-5", children=[
+layout = html.Div(id="on_init_logs", className="mx-2", children=[
   html.H1("Logging", style={'marginBottom': 0, 'marginTop': 32}, id='on_init'),
   
   html.Hr(style={'marginTop': 6, 'marginBottom': 32}),
@@ -21,7 +24,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
         html.Div(className="col-auto", children=[
           html.Label("Serial number:", className="col-form-label", style={'fontSize': 20})
         ]),
-        html.Div(className="col-6 col-md-2", children=[
+        html.Div(className="col-6 col-md-3 col-lg-2", children=[
           dcc.Input(type="text", className="form-control", placeholder='Enter serial number...')
         ]),
         html.Div(className="col-auto form-text", children=[
@@ -35,7 +38,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
         html.Div(className="col-auto", children=[
           html.Label("Manufacturer:", className="col-form-label", style={'fontSize': 20})
         ]),
-        html.Div(className="col-6 col-md-2", children=[
+        html.Div(className="col-6 col-md-3 col-lg-2", children=[
           dcc.Dropdown(
             options=[m['manufacturer_name'] for m in ManufacturerService.get_manufacturers()['content']],
             placeholder='Select a manufacturer...'
@@ -51,7 +54,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
         html.Div(className="col-auto", children=[
           html.Label("Region:", className="col-form-label", style={'fontSize': 20})
         ]),
-        html.Div(className="col-6 col-md-2", children=[
+        html.Div(className="col-6 col-md-3 col-lg-2", children=[
           dcc.Dropdown(
             options=[m['region_name'] for m in RegionService.get_regions()['content']],
             placeholder='Select a region...'
@@ -67,7 +70,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
         html.Div(className="col-auto", children=[
           html.Label("Rated kVA:", className="col-form-label", style={'fontSize': 20})
         ]),
-        html.Div(className="col-6 col-md-2", children=[
+        html.Div(className="col-6 col-md-3 col-lg-2", children=[
           dcc.Input(type="text", className="form-control", placeholder='Enter rated KvA...'),
         ]),
         html.Div(className="col-auto form-text", children=[
@@ -79,7 +82,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
       html.Div(className="row g-3 align-items-center my-3", children=[
         dbc.Button(
           "Submit transformer", outline=True, color="primary", 
-          className="me-1 col-6 col-md-2"
+          className="me-1 col-6 col-md-3 col-lg-2"
         )
       ])
     
@@ -104,7 +107,7 @@ layout = html.Div(id="on_init_logs", className="mx-5", children=[
       html.Div(className="col-auto", children=[
         html.Label("Failure Cause:", className="col-form-label", style={'fontSize': 20})
       ]),
-      html.Div(className="col-6 col-md-2", children=[
+      html.Div(className="col-6 col-md-3 col-lg-2", children=[
         dcc.Input(type="text", className="form-control", placeholder='Enter failure cause...'),
       ]),
       html.Div(className="col-auto form-text", children=[
