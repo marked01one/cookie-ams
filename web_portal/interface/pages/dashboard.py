@@ -1,4 +1,5 @@
 import random
+from typing import Any
 import dash
 from dash import html, dcc, callback, Input, Output
 import dash_bootstrap_components as dbc
@@ -17,13 +18,13 @@ STATUS_DEMO = [('Healthy', 'text-success') for _ in range(12)] + \
   [('Critical', 'text-danger') for _ in range(3)]
 
 
-layout = html.Div(className="mx-2", children=[
+layout = html.Div([
   # Dashboard
   html.Div(children=[
     html.H1("Dashboard", style={'marginBottom': 0, 'marginTop': 32}, id="dashboard_init"),
     html.Hr(style={'marginTop': 6, 'marginBottom': 32}),
     html.Div(className="row", children=[
-      html.Div(id="graph-title", className="col-auto fs-3 fst-underline", style={'fontFamily': 'Helvetica'}),
+      html.Div(id="graph-title", className="col-auto fs-4 fst-underline", style={'fontFamily': 'Montserrat'}),
       html.Div(className='col-4 col-md-2 border-primary', children=[
         dcc.Dropdown(
           options=['Manufacturer', 'Region'],
@@ -63,7 +64,7 @@ layout = html.Div(className="mx-2", children=[
         ]),
         html.Div(className="col4 col-md-2 my-2 border-primary", children=[
           html.Button(
-            "Download Table (.csv)", id="btn_download_table",
+            "CSV Download", id="btn_download_table",
             className="btn btn-outline-primary"
           ),
           dcc.Download(id="download_table_csv")
@@ -169,8 +170,14 @@ def update_output_div(id, sort_option: str):
     )
     graph_title = f'Annual Transformer Count'
   
+  count_max = df['Count'].sort_values().to_list()[-1] + 1
+  year_sorted = df['Year'].sort_values().to_list() 
+  
+  fig_data.update_traces(line={'width': 3})
   fig_data.update_layout(
-    margin={'l': 8, 'r': 8, 't': 8, 'b': 8},
+    margin={'l': 8, 'r': 8, 't': 24, 'b': 8},
+    yaxis_range=(0, count_max), 
+    xaxis_range=(int(year_sorted[0]) - 1, int(year_sorted[-1]) + 1),
     title={
       'x': 0.5,
       'y': 0.85,
@@ -278,7 +285,7 @@ def table_init(id, manufacturer, region):
 ], [
   Input('btn_download_table', 'n_clicks')
 ])
-def download_table_as_csv(n_clicks):
+def download_table_as_csv(n_clicks) -> None | dict[str, Any | None]:
   if n_clicks:
     transformer_response = TransformerService.get_transformers()['content']['results']
     
@@ -291,4 +298,6 @@ def download_table_as_csv(n_clicks):
     
     return [dcc.send_data_frame(df.to_csv, 'data_table.csv')]
 
+  else:
+    return
 

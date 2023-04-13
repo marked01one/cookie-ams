@@ -28,6 +28,8 @@ class TransformerSerializer(serializers.ModelSerializer):
 
 
 class FailureSerializer(serializers.ModelSerializer):
+  transformer = serializers.CharField(source='transformer.serial_number')
+  
   class Meta:
     model = Failure
     fields = ['id', 'transformer', 'failure_cause', 'description', 'date_failed']

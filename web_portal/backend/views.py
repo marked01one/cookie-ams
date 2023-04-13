@@ -4,8 +4,8 @@ from rest_framework.request import Request
 from rest_framework import viewsets, status, mixins
 from django.db.models.manager import BaseManager
 
-from .serializers import ManufacturerSerializer, RegionSerializer, TransformerSerializer
-from .models import Manufacturer, Region, Transformer
+from .serializers import FailureSerializer, ManufacturerSerializer, RegionSerializer, TransformerSerializer
+from .models import Failure, Manufacturer, Region, Transformer
 
 # Create your views here.
 class ManufacturerViewSet(viewsets.ViewSet):
@@ -56,6 +56,7 @@ class RegionViewSet(viewsets.ViewSet):
       return Response(body, status=status.HTTP_201_CREATED)
     
 
+
 class TransformerViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
   '''
   A simple ViewSet for operating on transformer data
@@ -84,7 +85,7 @@ class TransformerViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
       "page_size": query_str.get('page_size')
     }
     queryset = self.filter_queryset(
-      self._helper_querystring_filter(Transformer.objects.all().order_by('id'), params)
+      _helper_querystring_filter(Transformer.objects.all().order_by('id'), params)
     )
     serializer = TransformerSerializer(queryset, many=True)
 
@@ -124,9 +125,7 @@ class TransformerViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     
     '''
     body = TransformerSerializer(data=request.data).initial_data
-    manufacturer_fk = Manufacturer.objects.get(
-      manufacturer_name=body['manufacturer']
-    )
+    manufacturer_fk = Manufacturer.objects.get(manufacturer_name=body['manufacturer'])
     region_fk = Region.objects.get(region_name=body['region'])
       
     transformer = Transformer(
@@ -144,9 +143,62 @@ class TransformerViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         "serial_number": transformer.serial_number
       }
     )
+
+
+
+class FailureViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+  queryset = Failure.objects.all()
+  serializer_class = FailureSerializer
+  serializer = serializer_class(queryset, many=True)
+  
+  def list(self, request: Request) -> Response:
+    query_str = request.query_params
+    
+    queryset = _helper_querystring_filter(
+      queryset=Failure.objects.all().order_by('id'), 
+      params_map={'serial_number': query_str.get('serial_number')}
+    )
+    serializer = FailureSerializer(queryset, many=True)
+    return Response({
+      "count": len(serializer.data),
+      "message": 'All failure records.',
+      "results" : serializer.data
+    })
   
   
-  def _helper_querystring_filter(self, queryset: BaseManager, params_map: dict) -> BaseManager:
+  def create(self, request: Request) -> Response:
+    body = FailureSerializer(data=request.data).initial_data
+    transformer_fk = Transformer.objects.get(serial_number=body['transformer'])
+    
+    try:
+      failure_description = body['description']
+    except KeyError:
+      failure_description = "No description given"
+    
+    failure = Failure(
+      transformer=transformer_fk,
+      failure_cause=body['failure_cause'],
+      description=failure_description,
+      date_failed=datetime.strptime(body['date_failed'], "%Y-%m-%d").date()
+    )
+    
+    failure.save()
+    return Response(
+      status=status.HTTP_201_CREATED,
+      data={
+        "status": "successfully added new transformer!",
+        "failure_details": {
+          "transformer": transformer_fk.serial_number,
+          "failure_cause": failure.failure_cause,
+          "date_failed": failure.date_failed,
+          "description": failure.description
+        } 
+      }
+    )
+
+
+
+def _helper_querystring_filter(queryset: BaseManager, params_map: dict) -> BaseManager:
     for key in params_map.keys():
       if params_map[key] != None and key not in ['page', 'page_size']:
         param = {key: params_map[key]}
