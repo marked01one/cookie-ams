@@ -24,6 +24,7 @@ router = routers.DefaultRouter()
 router.register('manufacturer', views.ManufacturerViewSet, basename='manufacturer')
 router.register('region', views.RegionViewSet, basename='region')
 router.register('transformer', views.TransformerViewSet, basename='transformer')
+router.register('failure', views.FailureViewSet, basename='failure')
 
 
 urlpatterns = [
