@@ -66,4 +66,4 @@ def highlight_current_page(pathname, link_elements) -> Iterable[str]:
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000)
+  app.run_server(host='0.0.0.0', port=5000)
