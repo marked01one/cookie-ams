@@ -1,7 +1,7 @@
 import random
 from typing import Any
 import dash
-from dash import html, dcc, callback, Input, Output
+from dash import html, dcc, callback, Input, Output, no_update
 import dash_bootstrap_components as dbc
 import pandas as pd 
 import plotly.express as px
@@ -299,5 +299,5 @@ def download_table_as_csv(n_clicks) -> None | dict[str, Any | None]:
     return [dcc.send_data_frame(df.to_csv, 'data_table.csv')]
 
   else:
-    return
+    return [no_update]
 
