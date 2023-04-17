@@ -1,4 +1,4 @@
-from dash import Dash, html, dcc, Input, Output, ALL, callback, callback_context
+from dash import Dash, html, dcc, Input, Output, ALL, callback
 import dash, os
 import dash_bootstrap_components as dbc
 from typing import *
@@ -66,4 +66,4 @@ def highlight_current_page(pathname, link_elements) -> Iterable[str]:
 
 
 if __name__ == '__main__':
-  app.run_server(host='0.0.0.0', port=5000)
+  app.run(host='0.0.0.0', port=5000)

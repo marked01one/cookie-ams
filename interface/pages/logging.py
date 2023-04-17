@@ -115,11 +115,16 @@ layout = html.Div(id="on_init_logs", className="mx-2", children=[
       html.Div(className="col-auto", children=[
         html.Label("Failure Cause:", className="col-form-label", style={'fontSize': 20})
       ]),
+      
       html.Div(className="col-6 col-md-3 col-lg-2", children=[
-        dcc.Input(type="text", className="form-control", placeholder='Enter failure cause...'),
+        dcc.Dropdown(
+          ['Animal', 'Car Hit Pole', 'Corrosion', 'Fire', 'Overload', 'Other'], 
+          placeholder='Choose failure cause...'
+        ),
       ]),
+      
       html.Div(className="col-auto form-text mt-3", children=[
-        html.Span("The rated KvA of the transformer.")
+        html.Span("")
       ]),
     ]),
     
