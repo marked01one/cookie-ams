@@ -11,6 +11,8 @@ dash.register_page(
   title="CookieAMS - Insights"
 )
 
+df = pd.read_csv("../analysis/dataset_main.csv", index_col=False)
+
 layout = html.Div([
   html.H1("Insights", style={'marginBottom': 0, 'marginTop': 32}, id='insight_on_init'),
   
@@ -83,7 +85,7 @@ def pie_chart_types(dropdown_value: str):
   fig = px.pie(df.sort_values(by=[filter_col]), names=filter_col, hole=0.3)
   fig.update_layout(margin={'l': 8, 'r': 8, 't': 8, 'b': 8})
   
-  title = f'Transformer share, sorted by {dropdown_value.lower()}'
+  title = f'Transformer Share by {dropdown_value.lower()}'
   
   return [fig, title]
 
@@ -93,14 +95,46 @@ def pie_chart_types(dropdown_value: str):
 ], [
   Input('graph_chart_share', 'value')
 ])
-def graph_failure_correlation():
+def graph_failure_correlation(dropdown_value: str):
   failure_response = FailureService.get_failures()['content']['results']
   transformer_response = TransformerService.get_transformers()['content']['results']
   
+  columns = list(transformer_response[0].keys())
+  
+  df = pd.DataFrame({
+    col:[str(tr[col]) for tr in transformer_response]
+    for col in columns
+  })
+  
+  df['failure_cause'] = [f['failure_cause'] for f in failure_response]
+  
+  dfg = df.groupby(dropdown_value.lower().replace(' ', '_')).count().reset_index()
+  dfg = dfg.rename(columns={'serial_number': 'Transformers'})
+  
+  fig = px.bar(
+    dfg, template="plotly_white", y='Transformers', 
+    x=dropdown_value.lower().replace(' ', '_')
+  )
+  
+  fig.update_layout(
+    xaxis={
+      'title': dropdown_value,
+      "showline": True,
+      "linewidth": 1,
+      "linecolor": 'black',
+      'mirror': False,
+      'titlefont': {"size": 20, "family": "Helvetica"}
+    },
+    yaxis={
+      "showline": True,
+      "linewidth": 1,
+      "linecolor": 'black',
+      'mirror': False,
+      'titlefont': {"size": 20, "family": "Helvetica"}
+    }
+  )
   
   
-  
-  
-  return
+  return fig, f'Transformer Count by {dropdown_value}'
 
 
