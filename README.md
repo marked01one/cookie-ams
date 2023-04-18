@@ -32,6 +32,19 @@ An analytics-based asset management system design to log, monitor, and manage a 
 
 This repository contains the proof-of-concept version of CookieAMS, developed to be presented at the MISSA ITC conference. For more information, [visit their website here](https://www.calpolymissa.org/html/itc.html) 
 
+
+## Proposed Software Architecture 
+<img src="./interface/assets/ahi_chart.png" />
+
+## Features
+- #### Table log of all previous transformer failures, along with their specifications
+  - Sorting, filtering, and pagination features for tables to enhance user experience.
+- #### User-friendly form for logging new transformer failures
+  - Built-in authentication protects transformer database from being tampered by unauthorized individuals.
+- #### Analytics insight page on various statistics for previous transformer failures
+  - Analytics-based predictions using various classification & clustering machine learning models
+
+
 ## Getting Started
 1. Create a virtual environment:
 ```bash
@@ -49,13 +62,7 @@ $ pip install -r requirements.txt
 ```bash
 $ ./start.sh api  # Start the API server
 $ ./start.sh client  # Start the client server
+$ ./start.sh  # Start both at the same time
 ```
-
-## Features
-- #### Table log of all previous transformer failures, along with their specifications
-  - Sorting, filtering, and pagination features for tables to enhance user experience.
-- #### User-friendly form for logging new transformer failures
-  - Built-in authentication protects transformer database from being tampered by unauthorized individuals.
-- #### Analytics insight page on various statistics for previous transformer failures
-  - Analytics-based predictions using various classification & clustering machine learning models
+5. To check out the dashboard, use the URL `http://localhost:5000` and you're good to go!
 
